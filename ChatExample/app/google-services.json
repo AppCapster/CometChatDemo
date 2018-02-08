@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "447708023695",
+    "firebase_url": "https://chatexample-119fb.firebaseio.com",
+    "project_id": "chatexample-119fb",
+    "storage_bucket": "chatexample-119fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447708023695:android:4c3897fc8cbafca3",
+        "android_client_info": {
+          "package_name": "com.monika.chatdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447708023695-j7tfn0a87cgl3vpdka4r7ubn2dcjkcts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monika.chatdemo",
+            "certificate_hash": "167903e6f1c9ad6914172de3a12082697d80237a"
+          }
+        },
+        {
+          "client_id": "447708023695-tvkamive1lh1edksjp4ofahggjqjjtdg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjOY3DnjWVi5Ac7nub2AFitWjxo-fMl0c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447708023695-tvkamive1lh1edksjp4ofahggjqjjtdg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
