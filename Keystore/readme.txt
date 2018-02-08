@@ -1,0 +1,2 @@
+cometchat
+keychat
