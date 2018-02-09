@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.inscripts.interfaces.Callbacks;
@@ -32,11 +33,12 @@ public class MyCometChatActivity extends AppCompatActivity implements AdapterVie
     private CometChat cometchat;
 
     private ListView usersListView;
-    private static UsersListAdapter adapter;
+    private UsersListAdapter adapter;
 
-    private static ArrayList<String> list;
-    private static ArrayList<SingleUser> usersList = new ArrayList<SingleUser>();
-    private static Boolean flag=false;
+    private ArrayList<String> list;
+    private ArrayList<SingleUser> usersList = new ArrayList<SingleUser>();
+    private Boolean flag=true;
+    private LinearLayout layoutProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +48,22 @@ public class MyCometChatActivity extends AppCompatActivity implements AdapterVie
         SharedPreferenceHelper.initialize(this);
 
         usersListView = (ListView) findViewById(R.id.listViewUsers);
+        layoutProgress  =(LinearLayout)findViewById(R.id.layoutProgress);
+
         list = new ArrayList<String>();
 
         usersListView.setOnItemClickListener(this);
         adapter = new UsersListAdapter(this, usersList);
         usersListView.setAdapter(adapter);
-
+        layoutProgress.setVisibility(View.VISIBLE);
         final SubscribeCallbacks subCallbacks = new SubscribeCallbacks(){
             @Override
             public void gotOnlineList(JSONObject jsonObject) {
                 Log.d(TAG, "gotOnlineList: "+jsonObject.toString());
                 SharedPreferenceHelper.save(APIConfig.USERS_LIST, jsonObject.toString());
-                startActivity(getIntent());
+                if (list.size() <= 0) {
+                    populateList();
+                }
             }
 
             @Override
@@ -161,12 +167,9 @@ public class MyCometChatActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onStart() {
         super.onStart();
-        if (list.size() <= 0 && !flag) {
-            flag=true;
-            populateList();
-        }
+
     }
-    public static void populateList() {
+    public void populateList() {
         try {
             if (null != list && null != usersList && null != adapter) {
                 JSONObject onlineUsers;
@@ -190,7 +193,14 @@ public class MyCometChatActivity extends AppCompatActivity implements AdapterVie
                     list.add(username);
                     usersList.add(new SingleUser(username, user.getInt("id"), user.getString("m"), user.getString("s"), user.getString("a")));
                 }
-                adapter.notifyDataSetChanged();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        layoutProgress.setVisibility(View.GONE);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
             }
         } catch (Exception e) {
             e.printStackTrace();
